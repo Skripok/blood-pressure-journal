@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<header th:fragment="header"
+        id="appHeader"
+        class="navbar navbar-expand-lg bg-dark navbar-dark">
+
+    <div class="container">
+
+        <!-- Application logo and title -->
+        <a class="navbar-brand d-flex align-items-center gap-2"
+           th:href="@{/}">
+
+            <!-- Temporary logo placeholder -->
+            <img th:src="@{/images/logo.svg}"
+                 alt="Логотип журналу вимірювання тиску"
+                 width="44"
+                 height="44">
+
+            <span>Журнал вимірювання тиску</span>
+        </a>
+
+        <!-- Mobile menu button -->
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar"
+                aria-expanded="false"
+                aria-label="Перемкнути навігацію">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse"
+             id="mainNavbar">
+
+            <!-- Main navigation -->
+            <ul class="navbar-nav me-auto ms-lg-4">
+
+                <li class="nav-item">
+                    <a id="navHome" class="nav-link" th:href="@{/}">Головна</a>
+                        Головна
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="navNewMeasurement" class="nav-link" th:href="@{/persons/select}">
+                        Нове вимірювання
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="navHistory" class="nav-link" th:href="@{/persons/history}">
+                        Історія
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="navPersons" class="nav-link" th:href="@{/settings/persons}">
+                        Пацієнти
+                    </a>
+                </li>
+
+            </ul>
+
+            <!-- Page actions -->
+            <div class="d-flex gap-2">
+
+                <button id="navBack"
+                        type="button"
+                        class="btn btn-outline-light"
+                        onclick="navigateBack()">
+                    ← Назад
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script th:inline="javascript">
+        function navigateBack() {
+            const homeUrl = /*[[@{/}]]*/ '/';
+
+            if (window.history.length > 1 && document.referrer) {
+                const referrer = new URL(document.referrer);
+
+                if (referrer.origin === window.location.origin) {
+                    window.history.back();
+                    return;
+                }
+            }
+
+            window.location.href = homeUrl;
+        }
+
+        if (window.location.pathname === '/') {
+            document.getElementById('navBack').hidden = true;
+        }
+    </script>
+
+</header>
+
+</body>
+</html>

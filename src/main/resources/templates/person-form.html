@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${formMode == 'CREATE'}
+        ? 'Новий пацієнт — Журнал артеріального тиску'
+        : 'Редагування пацієнта — Журнал артеріального тиску'">
+        Пацієнт — Журнал артеріального тиску
+    </title>
+
+    <!-- Application favicon -->
+    <link rel="icon"
+          type="image/svg+xml"
+          th:href="@{/images/favicon.svg}">
+
+    <link rel="alternate icon"
+          type="image/x-icon"
+          th:href="@{/images/favicon.ico}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+
+<body>
+
+<header th:replace="~{fragments/header :: header}"></header>
+
+<div class="container mt-4">
+
+    <!-- Page header -->
+    <h1 class="mb-4"
+        th:text="${formMode == 'CREATE'} ? 'Новий пацієнт' : 'Редагування пацієнта'">
+        Пацієнт
+    </h1>
+
+    <form method="post"
+          data-editable-form
+          th:attr="data-form-mode=${formMode}"
+          th:action="${formMode == 'CREATE'}
+          ? @{/settings/persons}
+          : @{/settings/persons/{id}(id=${personForm.id})}"
+          th:object="${personForm}">
+
+        <!-- Last name -->
+        <div class="mb-3">
+            <label for="lastName" class="form-label">
+                Прізвище
+            </label>
+
+            <input type="text"
+                   class="form-control"
+                   id="lastName"
+                   th:field="*{lastName}"
+                   th:disabled="${formMode != 'CREATE'}">
+        </div>
+
+        <!-- First name -->
+        <div class="mb-3">
+            <label for="firstName" class="form-label">
+                Ім'я
+            </label>
+
+            <input type="text"
+                   class="form-control"
+                   id="firstName"
+                   th:field="*{firstName}"
+                   th:disabled="${formMode != 'CREATE'}">
+        </div>
+
+        <!-- Middle name -->
+        <div class="mb-3">
+            <label for="middleName" class="form-label">
+                По батькові
+            </label>
+
+            <input type="text"
+                   class="form-control"
+                   id="middleName"
+                   th:field="*{middleName}"
+                   th:disabled="${formMode != 'CREATE'}">
+        </div>
+
+        <!-- Birth date -->
+        <div class="mb-3">
+            <label for="birthDate" class="form-label">
+                Дата народження
+            </label>
+
+            <input type="date"
+                   class="form-control"
+                   id="birthDate"
+                   th:field="*{birthDate}"
+                   th:disabled="${formMode != 'CREATE'}">
+        </div>
+
+        <!-- Gender -->
+        <div class="mb-3">
+            <label for="gender" class="form-label">
+                Стать
+            </label>
+
+            <select class="form-select"
+                    id="gender"
+                    th:field="*{gender}"
+                    th:disabled="${formMode != 'CREATE'}">
+
+                <option value="">
+                    Оберіть стать
+                </option>
+
+                <option value="MALE">
+                    Чоловіча
+                </option>
+
+                <option value="FEMALE">
+                    Жіноча
+                </option>
+
+            </select>
+        </div>
+
+        <!-- Phone -->
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">
+                Номер телефону
+            </label>
+
+            <div class="input-group">
+
+                <select class="form-select"
+                        id="phoneCountry"
+                        th:field="*{phoneCountry}"
+                        style="max-width: 220px;"
+                        th:disabled="${formMode != 'CREATE'}">
+
+                    <option th:each="country : ${phoneCountries}"
+                            th:value="${country}"
+                            th:text="${country.displayName + ' (+' + country.code + ')'}">
+                        Україна (+380)
+                    </option>
+
+                </select>
+
+                <input type="tel"
+                       class="form-control"
+                       id="phoneNumber"
+                       th:field="*{phoneNumber}"
+                       placeholder="Введіть номер телефону"
+                       th:disabled="${formMode != 'CREATE'}">
+
+            </div>
+        </div>
+
+        <!-- Active -->
+        <div class="form-check mb-4">
+            <input type="checkbox"
+                   class="form-check-input"
+                   id="active"
+                   th:field="*{active}"
+                   th:disabled="${formMode != 'CREATE'}">
+
+            <input type="hidden"
+                   name="_active"
+                   value="on">
+
+            <label class="form-check-label" for="active">
+                Активний
+            </label>
+        </div>
+
+        <!-- Actions -->
+        <div class="d-flex gap-2">
+
+            <button type="button"
+                    class="btn btn-primary"
+                    data-editable-primary-action
+                    th:text="${formMode == 'CREATE'} ? 'Створити' : 'Редагувати'">
+                Редагувати
+            </button>
+
+            <a th:href="@{/settings/persons}"
+               class="btn btn-outline-secondary"
+               data-editable-cancel-action>
+                Скасувати
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/editable-form.js}"></script>
+
+</body>
+</html>

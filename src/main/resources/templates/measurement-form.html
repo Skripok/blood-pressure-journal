@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Нове вимірювання — Журнал артеріального тиску</title>
+
+    <!-- Application favicon -->
+    <link rel="icon"
+          type="image/svg+xml"
+          th:href="@{/images/favicon.svg}">
+
+    <link rel="alternate icon"
+          type="image/x-icon"
+          th:href="@{/images/favicon.ico}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+
+<body>
+
+<header th:replace="~{fragments/header :: header}"></header>
+
+<div class="container mt-4">
+
+    <h1 th:text="${formMode == 'EDIT'}
+        ? 'Редагування вимірювання'
+        : 'Нове вимірювання'">
+        Нове вимірювання
+    </h1>
+
+    <!-- Person -->
+    <div class="mb-4 text-secondary">
+        Пацієнт:
+        <strong class="text-dark"
+                th:text="${person.lastName + ' ' + person.firstName
+                    + (person.middleName != null && !person.middleName.isBlank()
+                        ? ' ' + person.middleName
+                        : '')}">
+            Іван Петренко
+        </strong>
+    </div>
+
+    <form method="post"
+          data-editable-form
+          th:attr="data-form-mode=${formMode}"
+          th:action="${formMode == 'EDIT'}
+          ? @{/measurements/{id}(id=${measurementId})}
+          : @{/measurements}"
+          th:object="${measurementForm}">
+
+        <input type="hidden" th:field="*{personId}">
+
+        <!-- Date and time -->
+        <div class="row mb-4">
+            <div class="col-md-5 col-lg-4">
+                <label for="measuredAt" class="form-label">
+                    Дата і час
+                </label>
+
+                <input type="datetime-local"
+                       class="form-control"
+                       id="measuredAt"
+                       th:field="*{measuredAt}"
+                       th:disabled="${formMode == 'EDIT'}">
+            </div>
+        </div>
+
+        <!-- Blood pressure -->
+        <h5 class="mb-3">Артеріальний тиск</h5>
+
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-4">
+                <label for="systolic" class="form-label">
+                    Систолічний
+                </label>
+
+                <div class="input-group">
+                    <input type="number"
+                           class="form-control"
+                           id="systolic"
+                           th:field="*{systolic}"
+                           min = "1"
+                           step="1"
+                           th:disabled="${formMode == 'EDIT'}">
+
+                    <span class="input-group-text">
+                        мм рт. ст.
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="diastolic" class="form-label">
+                    Діастолічний
+                </label>
+
+                <div class="input-group">
+                    <input type="number"
+                           class="form-control"
+                           id="diastolic"
+                           th:field="*{diastolic}"
+                           min = "1"
+                           step="1"
+                           th:disabled="${formMode == 'EDIT'}">
+
+                    <span class="input-group-text">
+                        мм рт. ст.
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="pulse" class="form-label">
+                    Пульс
+                </label>
+
+                <div class="input-group">
+                    <input type="number"
+                           class="form-control"
+                           id="pulse"
+                           th:field="*{pulse}"
+                           min ="1"
+                           step="1"
+                           th:disabled="${formMode == 'EDIT'}">
+
+                    <span class="input-group-text">
+                        уд/хв
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Additional body measurements -->
+        <h5 class="mb-3">Додаткові дані</h5>
+
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-4">
+                <label for="heightCm" class="form-label">
+                    Зріст
+                </label>
+
+                <div class="input-group">
+                    <input type="number"
+                           class="form-control"
+                           id="heightCm"
+                           th:field="*{heightCm}"
+                           min = "1"
+                           step="0.1"
+                           th:disabled="${formMode == 'EDIT'}">
+
+                    <span class="input-group-text">см</span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="weightKg" class="form-label">
+                    Вага
+                </label>
+
+                <div class="input-group">
+                    <input type="number"
+                           class="form-control"
+                           id="weightKg"
+                           th:field="*{weightKg}"
+                           min ="1"
+                           step="0.1"
+                           th:disabled="${formMode == 'EDIT'}">
+
+                    <span class="input-group-text">кг</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Note -->
+        <div class="mb-4">
+            <label for="note" class="form-label">
+                Примітка
+            </label>
+
+            <textarea class="form-control"
+                      id="note"
+                      th:field="*{note}"
+                      rows="3"
+                      th:disabled="${formMode == 'EDIT'}"></textarea>
+        </div>
+
+        <!-- Actions -->
+        <div class="d-flex gap-2">
+
+            <button type="button"
+                    class="btn btn-primary"
+                    data-editable-primary-action
+                    th:text="${formMode == 'EDIT'} ? 'Редагувати' : 'Створити'">
+                Редагувати
+            </button>
+
+            <a class="btn btn-outline-secondary"
+               data-editable-cancel-action
+               th:href="${formMode == 'EDIT'}
+           ? @{/measurements(personId=${measurementForm.personId})}
+           : @{/persons/select}">
+                Скасувати
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/editable-form.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Журнал артеріального тиску</title>
+
+    <!-- Application favicon -->
+    <link rel="icon"
+          type="image/svg+xml"
+          th:href="@{/images/favicon.svg}">
+
+    <link rel="alternate icon"
+          type="image/x-icon"
+          th:href="@{/images/favicon.ico}">
+
+    <!-- Bootstrap CSS -->
+    <!-- Local Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+
+<body>
+
+<header th:replace="~{fragments/header :: header}"></header>
+
+<div class="container mt-5">
+
+    <h1 class="mb-4">Журнал артеріального тиску</h1>
+
+    <a th:href="@{/persons/select}" class="btn btn-primary">
+        Додати вимірювання
+    </a>
+
+    <a th:href="@{/persons/history}"
+       class="btn btn-outline-primary">
+        Історія вимірювань
+    </a>
+
+    <a th:href="@{/settings/persons}"
+       class="btn btn-outline-secondary">
+        Налаштування пацієнтів
+    </a>
+
+</div>
+
+
+<!-- Local Bootstrap JavaScript -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
