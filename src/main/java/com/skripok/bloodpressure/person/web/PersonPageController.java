@@ -41,6 +41,7 @@ public class PersonPageController {
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate birthDate,
             @RequestParam(defaultValue = "active") String personStatus,
+            @RequestParam(defaultValue = "0") int page,
             Model model) {
 
         return showPersons(
@@ -50,6 +51,7 @@ public class PersonPageController {
                 birthDate,
                 personStatus,
                 PersonPageMode.SELECT,
+                page,
                 model
         );
     }
@@ -62,6 +64,7 @@ public class PersonPageController {
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate birthDate,
             @RequestParam(defaultValue = "active") String personStatus,
+            @RequestParam(defaultValue = "0") int page,
             Model model) {
 
         return showPersons(
@@ -71,6 +74,7 @@ public class PersonPageController {
                 birthDate,
                 personStatus,
                 PersonPageMode.MANAGE,
+                page,
                 model
         );
     }
@@ -82,6 +86,7 @@ public class PersonPageController {
             LocalDate birthDate,
             String personStatus,
             PersonPageMode pageMode,
+            int page,
             Model model) {
 
         final PersonSearchCriteria criteria = new PersonSearchCriteria();
@@ -94,7 +99,7 @@ public class PersonPageController {
         final Page<Person> persons = personService.search(
                 criteria,
                 PageRequest.of(
-                        0,
+                        Math.max(0, page),
                         20,
                         Sort.by(
                                 Sort.Order.asc("lastName"),
@@ -105,12 +110,21 @@ public class PersonPageController {
         );
 
         model.addAttribute("persons", persons.getContent());
+        model.addAttribute("personsPage", persons);
         model.addAttribute("name", name);
         model.addAttribute("middleName", middleName);
         model.addAttribute("phone", phone);
         model.addAttribute("birthDate", birthDate);
         model.addAttribute("personStatus", personStatus);
         model.addAttribute("pageMode", pageMode);
+
+        final String personsUrl = switch (pageMode) {
+            case MANAGE -> "/settings/persons";
+            case SELECT -> "/persons/select";
+            case HISTORY -> "/persons/history";
+        };
+
+        model.addAttribute("personsUrl", personsUrl);
 
         return "persons";
     }
@@ -174,6 +188,7 @@ public class PersonPageController {
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate birthDate,
             @RequestParam(defaultValue = "active") String personStatus,
+            @RequestParam(defaultValue = "0") int page,
             Model model) {
 
         return showPersons(
@@ -183,6 +198,7 @@ public class PersonPageController {
                 birthDate,
                 personStatus,
                 PersonPageMode.HISTORY,
+                page,
                 model
         );
     }

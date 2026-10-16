@@ -109,6 +109,60 @@
             </tr>
             </tbody>
         </table>
+
+        <!-- Measurements pagination -->
+        <nav th:if="${measurements.totalPages > 1}"
+             aria-label="Навігація сторінками вимірювань">
+
+            <ul class="pagination justify-content-center mt-4">
+
+                <!-- Previous page -->
+                <li class="page-item"
+                    th:classappend="${measurements.first} ? 'disabled'">
+
+                    <a class="page-link"
+                       th:href="@{/measurements(
+                   personId=${person.id},
+                   page=${measurements.number - 1},
+                   size=${measurements.size}
+               )}">
+                        &laquo;
+                    </a>
+                </li>
+
+                <!-- Page numbers -->
+                <li class="page-item"
+                    th:each="pageNumber : ${#numbers.sequence(0, measurements.totalPages - 1)}"
+                    th:classappend="${pageNumber == measurements.number} ? 'active'">
+
+                    <a class="page-link"
+                       th:href="@{/measurements(
+                   personId=${person.id},
+                   page=${pageNumber},
+                   size=${measurements.size}
+               )}"
+                       th:text="${pageNumber + 1}">
+                        1
+                    </a>
+                </li>
+
+                <!-- Next page -->
+                <li class="page-item"
+                    th:classappend="${measurements.last} ? 'disabled'">
+
+                    <a class="page-link"
+                       th:href="@{/measurements(
+                   personId=${person.id},
+                   page=${measurements.number + 1},
+                   size=${measurements.size}
+               )}">
+                        &raquo;
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
     </div>
 
 </div>

@@ -242,6 +242,68 @@
         </table>
     </div>
 
+    <!-- Persons pagination -->
+    <nav th:if="${personsPage.totalPages > 1}"
+         aria-label="Навігація сторінками пацієнтів">
+
+        <ul class="pagination justify-content-center mt-4">
+
+            <!-- Previous page -->
+            <li class="page-item"
+                th:classappend="${personsPage.first} ? 'disabled'">
+
+                <a class="page-link"
+                   th:href="@{${personsUrl}(
+                   page=${personsPage.number - 1},
+                   name=${name},
+                   middleName=${middleName},
+                   phone=${phone},
+                   birthDate=${birthDate},
+                   personStatus=${personStatus}
+               )}">
+                    &laquo;
+                </a>
+            </li>
+
+            <!-- Page numbers -->
+            <li class="page-item"
+                th:each="pageNumber : ${#numbers.sequence(0, personsPage.totalPages - 1)}"
+                th:classappend="${pageNumber == personsPage.number} ? 'active'">
+
+                <a class="page-link"
+                   th:href="@{${personsUrl}(
+                   page=${pageNumber},
+                   name=${name},
+                   middleName=${middleName},
+                   phone=${phone},
+                   birthDate=${birthDate},
+                   personStatus=${personStatus}
+               )}"
+                   th:text="${pageNumber + 1}">
+                    1
+                </a>
+            </li>
+
+            <!-- Next page -->
+            <li class="page-item"
+                th:classappend="${personsPage.last} ? 'disabled'">
+
+                <a class="page-link"
+                   th:href="@{${personsUrl}(
+                   page=${personsPage.number + 1},
+                   name=${name},
+                   middleName=${middleName},
+                   phone=${phone},
+                   birthDate=${birthDate},
+                   personStatus=${personStatus}
+               )}">
+                    &raquo;
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
     <a th:href="@{/}" class="btn btn-outline-secondary">
         На головну
     </a>
