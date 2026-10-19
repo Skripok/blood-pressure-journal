@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import java.math.BigDecimal;
 
 @Service
@@ -126,5 +129,23 @@ public class BloodPressureMeasurementServiceImpl implements BloodPressureMeasure
                 .orElse(null);
 
         return new LatestBodyMeasurements(heightCm, weightKg);
+    }
+
+    @Override
+    public List<BloodPressureMeasurement> findByPersonIdAndPeriod(Long personId, LocalDateTime from, LocalDateTime to) {
+
+        if (from == null || to == null || !from.isBefore(to)) {
+            throw new IllegalArgumentException("Invalid measurement period");
+        }
+
+        return measurementRepository
+                .findByPerson_IdAndMeasuredAtGreaterThanEqualAndMeasuredAtLessThanOrderByMeasuredAtAsc(
+                        personId,
+                        from,
+                        to
+                )
+                .stream()
+                .map(measurementMapper::toDomain)
+                .toList();
     }
 }

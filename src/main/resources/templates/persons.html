@@ -44,11 +44,7 @@
 
         <!-- Search form -->
         <form method="get"
-              th:action="${pageMode.name() == 'MANAGE'}
-          ? @{/settings/persons}
-          : (${pageMode.name() == 'HISTORY'}
-              ? @{/persons/history}
-              : @{/persons/select})">
+              th:action="@{${personsUrl}}">
 
             <!-- Patient search -->
             <div class="input-group mb-3">
@@ -196,9 +192,11 @@
                 th:onclick="${pageMode.name() == 'MANAGE'}
                 ? |window.location.href='@{/settings/persons/{id}/edit(id=${person.id})}'|
                 : (${pageMode.name() == 'HISTORY'}
-                ? |window.location.href='@{/measurements(personId=${person.id})}'|
-                : |window.location.href='@{/measurements/new(personId=${person.id})}'|)"
-                style="cursor: pointer;">
+                    ? |window.location.href='@{/measurements(personId=${person.id})}'|
+                    : (${pageMode.name() == 'CHARTS'}
+                        ? |window.location.href='@{/measurements/charts(personId=${person.id})}'|
+                        : |window.location.href='@{/measurements/new(personId=${person.id})}'|))"
+                        style="cursor: pointer;">
 
                 <td th:text="${person.lastName}">
                     Прізвище

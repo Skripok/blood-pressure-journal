@@ -79,6 +79,29 @@ public class PersonPageController {
         );
     }
 
+    @GetMapping("/persons/charts")
+    public String selectPersonForCharts(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String middleName,
+            @RequestParam(required = false) String phone,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate birthDate,
+            @RequestParam(defaultValue = "active") String personStatus,
+            @RequestParam(defaultValue = "0") int page,
+            Model model) {
+
+        return showPersons(
+                name,
+                middleName,
+                phone,
+                birthDate,
+                personStatus,
+                PersonPageMode.CHARTS,
+                page,
+                model
+        );
+    }
+
     private String showPersons(
             String name,
             String middleName,
@@ -122,6 +145,7 @@ public class PersonPageController {
             case MANAGE -> "/settings/persons";
             case SELECT -> "/persons/select";
             case HISTORY -> "/persons/history";
+            case CHARTS -> "/persons/charts";
         };
 
         model.addAttribute("personsUrl", personsUrl);

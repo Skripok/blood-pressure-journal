@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Графіки вимірювань — Журнал артеріального тиску</title>
+
+    <link rel="icon" type="image/svg+xml"
+          th:href="@{/images/favicon.svg}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+
+<body>
+
+<header th:replace="~{fragments/header :: header}"></header>
+
+<main class="container mt-4 mb-5">
+
+    <h1 class="mb-3">Графіки вимірювань</h1>
+
+    <!-- Selected patient -->
+    <h5 class="text-muted mb-4"
+        th:text="|${person.lastName} ${person.firstName} ${person.middleName ?: ''}|">
+        Пацієнт
+    </h5>
+
+    <!-- Chart settings -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <button class="btn w-100 text-start"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#chartSettings"
+                    aria-controls="chartSettings"
+                    th:attr="aria-expanded=${#lists.isEmpty(measurements)}">
+                Налаштування графіків
+                <span class="text-muted ms-2"
+                      th:text="|Останні ${days} днів · ${timeOfDayLabel}|">
+                    Останні 30 днів · Весь день
+                </span>
+            </button>
+        </div>
+
+        <!-- Keep settings open when no measurements exist -->
+        <div id="chartSettings"
+             class="collapse"
+             th:classappend="${#lists.isEmpty(measurements)} ? 'show' : ''">
+
+            <div class="card-body">
+                <form id="chartFilterForm"
+                      method="get"
+                      th:action="@{/measurements/charts}">
+
+                    <input type="hidden"
+                           name="personId"
+                           th:value="${person.id}">
+
+                    <div class="mb-3">
+                        <label for="periodPreset" class="form-label">
+                            Період
+                        </label>
+
+                        <select id="periodPreset" class="form-select">
+                            <option value="7">Останні 7 днів</option>
+                            <option value="30">Останні 30 днів</option>
+                            <option value="90">Останні 90 днів</option>
+                            <option value="365">Останні 365 днів</option>
+                            <option value="custom">Власний період</option>
+                        </select>
+
+                        <div id="customPeriodBlock" class="mt-3 d-none">
+                            <label for="customDays" class="form-label">
+                                Кількість днів
+                            </label>
+
+                            <input type="number"
+                                   id="customDays"
+                                   class="form-control"
+                                   min="1"
+                                   max="365"
+                                   step="1"
+                                   value="30">
+
+                            <div class="form-text">
+                                Введіть кількість днів від 1 до 365.
+                            </div>
+                        </div>
+
+                        <input type="hidden"
+                               id="days"
+                               name="days"
+                               th:value="${days}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="timeOfDay" class="form-label">
+                            Час доби
+                        </label>
+
+                        <select id="timeOfDay"
+                                name="timeOfDay"
+                                class="form-select">
+                            <option value="all"
+                                    th:selected="${timeOfDay == 'all'}">
+                                Весь день
+                            </option>
+                            <option value="morning"
+                                    th:selected="${timeOfDay == 'morning'}">
+                                Ранок (06:00–11:59)
+                            </option>
+                            <option value="day"
+                                    th:selected="${timeOfDay == 'day'}">
+                                День (12:00–16:59)
+                            </option>
+                            <option value="evening"
+                                    th:selected="${timeOfDay == 'evening'}">
+                                Вечір (17:00–23:59)
+                            </option>
+                            <option value="night"
+                                    th:selected="${timeOfDay == 'night'}">
+                                Ніч (00:00–05:59)
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card-footer bg-white">
+            <button type="submit"
+                    form="chartFilterForm"
+                    class="btn btn-primary">
+                Побудувати графіки
+            </button>
+        </div>
+    </div>
+
+    <!-- Empty result -->
+    <div th:if="${#lists.isEmpty(measurements)}"
+         class="alert alert-info">
+        За вибраний період і час доби вимірювань немає.
+    </div>
+
+    <!-- Chart containers -->
+    <div id="chartsContainer"
+         th:unless="${#lists.isEmpty(measurements)}"
+         th:attr="data-measurements=${chartDataJson}">
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Артеріальний тиск і пульс</h5>
+                <div style="position: relative; height: 420px;">
+                    <canvas id="pressureChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <a th:href="@{/persons/charts}"
+       class="btn btn-outline-secondary">
+        Обрати іншого пацієнта
+    </a>
+
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/chart.umd.min.js}"></script>
+<script th:src="@{/js/measurement-charts.js}"></script>
+
+</body>
+</html>
