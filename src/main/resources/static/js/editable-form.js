@@ -87,6 +87,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     : 'Зберегти';
         }
 
+        // Validate required text fields that must not contain only whitespace
+        const trimRequiredFields = form.querySelectorAll('[data-trim-required]');
+
+        trimRequiredFields.forEach(field => {
+
+            function validateField() {
+                const isWhitespaceOnly =
+                    field.value.length > 0 && field.value.trim().length === 0;
+
+                field.setCustomValidity(
+                    isWhitespaceOnly
+                        ? 'Поле не може містити лише пробіли'
+                        : ''
+                );
+            }
+
+            field.addEventListener('input', validateField);
+            field.addEventListener('blur', validateField);
+
+            // Validate values already present when the form loads
+            validateField();
+        });
+
         // Handle Edit / Save / Create
         primaryAction.addEventListener('click', () => {
 

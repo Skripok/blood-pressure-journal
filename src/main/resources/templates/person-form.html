@@ -19,7 +19,8 @@
           type="image/x-icon"
           th:href="@{/images/favicon.ico}">
 
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Shared application styles -->
+    <th:block th:replace="~{fragments/styles :: styles}"></th:block>
 </head>
 
 <body>
@@ -52,6 +53,8 @@
                    class="form-control"
                    id="lastName"
                    th:field="*{lastName}"
+                   required
+                   data-trim-required
                    th:disabled="${formMode != 'CREATE'}">
         </div>
 
@@ -65,6 +68,8 @@
                    class="form-control"
                    id="firstName"
                    th:field="*{firstName}"
+                   required
+                   data-trim-required
                    th:disabled="${formMode != 'CREATE'}">
         </div>
 
@@ -91,6 +96,7 @@
                    class="form-control"
                    id="birthDate"
                    th:field="*{birthDate}"
+                   required
                    th:disabled="${formMode != 'CREATE'}">
         </div>
 
@@ -103,6 +109,7 @@
             <select class="form-select"
                     id="gender"
                     th:field="*{gender}"
+                    required
                     th:disabled="${formMode != 'CREATE'}">
 
                 <option value="">

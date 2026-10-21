@@ -15,7 +15,8 @@
           type="image/x-icon"
           th:href="@{/images/favicon.ico}">
 
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Shared application styles -->
+    <th:block th:replace="~{fragments/styles :: styles}"></th:block>
 </head>
 
 <body>
@@ -63,6 +64,7 @@
                        class="form-control"
                        id="measuredAt"
                        th:field="*{measuredAt}"
+                       required
                        th:disabled="${formMode == 'EDIT'}">
             </div>
         </div>
@@ -82,6 +84,7 @@
                            class="form-control"
                            id="systolic"
                            th:field="*{systolic}"
+                           required
                            min = "1"
                            step="1"
                            th:disabled="${formMode == 'EDIT'}">
@@ -102,6 +105,7 @@
                            class="form-control"
                            id="diastolic"
                            th:field="*{diastolic}"
+                           required
                            min = "1"
                            step="1"
                            th:disabled="${formMode == 'EDIT'}">
@@ -216,6 +220,7 @@
 
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/js/editable-form.js}"></script>
+<script th:src="@{/js/measurement-validation.js}"></script>
 
 </body>
 </html>

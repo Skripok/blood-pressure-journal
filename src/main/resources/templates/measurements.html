@@ -15,7 +15,8 @@
           type="image/x-icon"
           th:href="@{/images/favicon.ico}">
 
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Shared application styles -->
+    <th:block th:replace="~{fragments/styles :: styles}"></th:block>
 </head>
 
 <body>

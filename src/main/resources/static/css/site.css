@@ -1,0 +1,76 @@
+
+/* Global application theme */
+
+:root {
+    --site-bg: #f7f4ee;
+    --site-surface: #ffffff;
+    --site-header-bg: #f0ede7;
+    --site-text: #253247;
+    --site-text-muted: #657080;
+    --site-border: #e2ded7;
+    --site-accent: #2875e8;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--site-bg);
+    color: var(--site-text);
+}
+
+/* Shared navigation header */
+
+.site-header {
+    background-color: var(--site-header-bg);
+    border-bottom: 1px solid var(--site-border);
+}
+
+.site-header .navbar-brand {
+    color: var(--site-text);
+}
+
+.site-header .nav-link {
+    color: var(--site-text-muted);
+    transition: color 0.2s ease;
+}
+
+.site-header .nav-link:hover,
+.site-header .nav-link:focus {
+    color: var(--site-accent);
+}
+
+.site-header .nav-link.active {
+    color: var(--site-accent);
+    font-weight: 600;
+}
+
+
+/* Header refinements */
+
+.site-header {
+    min-height: 70px;
+    box-shadow: 0 2px 12px rgba(37, 50, 71, 0.04);
+}
+
+.site-header .navbar-brand {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.site-header .navbar-brand:hover {
+    color: var(--site-text);
+}
+
+.site-header .navbar-toggler {
+    border-color: var(--site-border);
+}
+
+.site-header #navBack {
+    border-color: #d4d0c8;
+    color: var(--site-text-muted);
+    border-radius: 10px;
+}
+
+.site-header #navBack:hover {
+    background-color: #e7e2da;
+    color: var(--site-text);
+}

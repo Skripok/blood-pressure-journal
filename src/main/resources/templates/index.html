@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="uk" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -7,48 +8,108 @@
     <title>Журнал артеріального тиску</title>
 
     <!-- Application favicon -->
-    <link rel="icon"
-          type="image/svg+xml"
+    <link rel="icon" type="image/svg+xml"
           th:href="@{/images/favicon.svg}">
-
-    <link rel="alternate icon"
-          type="image/x-icon"
+    <link rel="alternate icon" type="image/x-icon"
           th:href="@{/images/favicon.ico}">
 
-    <!-- Bootstrap CSS -->
-    <!-- Local Bootstrap CSS -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Shared application styles -->
+    <th:block th:replace="~{fragments/styles :: styles}"></th:block>
+
+    <!-- Home page styles -->
+    <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 
-<body>
+<body class="home-page">
 
 <header th:replace="~{fragments/header :: header}"></header>
 
-<div class="container mt-5">
+<main class="home-main">
+    <div class="container">
 
-    <h1 class="mb-4">Журнал артеріального тиску</h1>
+        <section class="home-intro">
+            <h1>Журнал вимірювання тиску</h1>
+            <p>
+                Простий інструмент для запису та перегляду
+                вимірювань артеріального тиску.
+            </p>
+        </section>
 
-    <a th:href="@{/persons/select}" class="btn btn-primary">
-        Додати вимірювання
-    </a>
+        <nav class="home-actions" aria-label="Основні розділи">
 
-    <a th:href="@{/persons/history}"
-       class="btn btn-outline-primary">
-        Історія вимірювань
-    </a>
+            <a th:href="@{/persons/select}"
+               class="home-card home-card-blue">
+                <span class="home-card-icon" aria-hidden="true">
+                    <img th:src="@{/images/icons/plus.svg}" alt="">
+                </span>
+                <span class="home-card-content">
+                    <span class="home-card-title">
+                        Додати вимірювання
+                    </span>
+                    <span class="home-card-description">
+                        Записати нове вимірювання артеріального тиску
+                    </span>
+                </span>
+                <span class="home-card-arrow" aria-hidden="true">→</span>
+            </a>
 
-    <a th:href="@{/persons/charts}"
-       class="btn btn-outline-primary">
-        Графіки вимірювань
-    </a>
+            <a th:href="@{/settings/persons}"
+               class="home-card home-card-purple">
+                <span class="home-card-icon" aria-hidden="true">
+                    <img th:src="@{/images/icons/users.svg}" alt="">
+                </span>
+                <span class="home-card-content">
+                    <span class="home-card-title">
+                        Налаштування пацієнтів
+                    </span>
+                    <span class="home-card-description">
+                        Додати або редагувати дані пацієнтів
+                    </span>
+                </span>
+                <span class="home-card-arrow" aria-hidden="true">→</span>
+            </a>
 
-    <a th:href="@{/settings/persons}"
-       class="btn btn-outline-secondary">
-        Налаштування пацієнтів
-    </a>
+            <a th:href="@{/persons/history}"
+               class="home-card home-card-green">
+                <span class="home-card-icon" aria-hidden="true">
+                    <img th:src="@{/images/icons/list.svg}" alt="">
+                </span>
+                <span class="home-card-content">
+                    <span class="home-card-title">
+                        Історія вимірювань
+                    </span>
+                    <span class="home-card-description">
+                        Переглянути збережені вимірювання
+                    </span>
+                </span>
+                <span class="home-card-arrow" aria-hidden="true">→</span>
+            </a>
 
-</div>
+            <a th:href="@{/persons/charts}"
+               class="home-card home-card-orange">
+                <span class="home-card-icon" aria-hidden="true">
+                    <img th:src="@{/images/icons/chart.svg}" alt="">
+                </span>
+                <span class="home-card-content">
+                    <span class="home-card-title">
+                        Графіки вимірювань
+                    </span>
+                    <span class="home-card-description">
+                        Переглянути динаміку артеріального тиску
+                    </span>
+                </span>
+                <span class="home-card-arrow" aria-hidden="true">→</span>
+            </a>
 
+        </nav>
+
+        <p class="home-disclaimer">
+            Навчальний застосунок для особистого використання.
+            Не призначений для медичної діагностики.
+        </p>
+
+    </div>
+</main>
 
 <!-- Local Bootstrap JavaScript -->
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>

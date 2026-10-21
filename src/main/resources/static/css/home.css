@@ -1,0 +1,241 @@
+
+/* Home page layout */
+
+.home-page {
+    min-height: 100vh;
+
+    background-image: url('../images/home-background.png');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    background-color: #f8f7f4;
+    color: #15233d;
+}
+
+.home-main {
+    padding: 85px 20px 60px;
+}
+
+.home-intro {
+    text-align: center;
+    margin: 0 auto 48px;
+    max-width: 750px;
+}
+
+.home-intro h1 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 750;
+    letter-spacing: -0.035em;
+    margin-bottom: 18px;
+}
+
+.home-intro p {
+    font-size: 1.1rem;
+    color: #65728a;
+    line-height: 1.7;
+}
+
+/* Action cards */
+
+.home-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.home-card {
+    --accent: #2875e8;
+    --soft: #e9f2ff;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-height: 155px;
+    padding: 26px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(220, 226, 235, 0.85);
+    border-radius: 20px;
+    box-shadow: 0 8px 28px rgba(30, 45, 75, 0.055);
+    color: #15233d;
+    text-decoration: none;
+    transition: transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.home-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px rgba(30, 45, 75, 0.12);
+    border-color: var(--accent);
+    color: #15233d;
+}
+
+.home-card:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.home-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 70px;
+    width: 70px;
+    height: 70px;
+    border-radius: 17px;
+    background: var(--soft);
+    color: var(--accent);
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+
+.home-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+    min-width: 0;
+}
+
+.home-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.home-card-description {
+    color: #68758c;
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+.home-card-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--soft);
+    color: var(--accent);
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+.home-card:hover .home-card-arrow {
+    transform: translateX(4px);
+}
+
+/* Card color variants */
+
+.home-card-blue {
+    --accent: #2875e8;
+    --soft: #e9f2ff;
+}
+
+.home-card-purple {
+    --accent: #7751dc;
+    --soft: #f0ebff;
+}
+
+.home-card-green {
+    --accent: #1aa567;
+    --soft: #e6f8ee;
+}
+
+.home-card-orange {
+    --accent: #ed9a16;
+    --soft: #fff3da;
+}
+
+/* Disclaimer */
+
+.home-disclaimer {
+    text-align: center;
+    color: #87909f;
+    font-size: 0.82rem;
+    margin: 55px auto 0;
+}
+
+/* Responsive layout */
+
+@media (max-width: 767px) {
+    .home-main {
+        padding: 45px 8px 35px;
+    }
+
+    .home-intro {
+        margin-bottom: 32px;
+    }
+
+    .home-actions {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .home-card {
+        min-height: 125px;
+        padding: 18px;
+        gap: 14px;
+    }
+
+    .home-card-icon {
+        flex-basis: 56px;
+        width: 56px;
+        height: 56px;
+        font-size: 2rem;
+    }
+
+    .home-card-title {
+        font-size: 1rem;
+    }
+
+    .home-card-description {
+        font-size: 0.85rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-card,
+    .home-card-arrow {
+        transition: none;
+    }
+}
+
+/* SVG icons inside action cards */
+
+.home-card-icon img {
+    display: block;
+    width: 34px;
+    height: 34px;
+}
+
+@media (max-width: 767px) {
+    .home-card-icon img {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Mobile background */
+
+@media (max-width: 767px) {
+    .home-page {
+        background-image: none;
+        background:
+                radial-gradient(
+                        ellipse at 10% 20%,
+                        #e8f2eb 0%,
+                        transparent 50%
+                ),
+                radial-gradient(
+                        ellipse at 90% 80%,
+                        #eaf0fa 0%,
+                        transparent 50%
+                ),
+                #f8f7f4;
+    }
+}
