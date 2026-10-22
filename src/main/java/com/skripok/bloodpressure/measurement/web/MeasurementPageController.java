@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.skripok.bloodpressure.measurement.domain.BloodPressureMeasurement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +46,6 @@ public class MeasurementPageController {
 
         final MeasurementForm measurementForm = new MeasurementForm();
         measurementForm.setPersonId(personId);
-        measurementForm.setMeasuredAt(LocalDateTime.now());
         measurementForm.setHeightCm(latestBodyMeasurements.heightCm());
         measurementForm.setWeightKg(latestBodyMeasurements.weightKg());
 

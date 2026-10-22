@@ -220,6 +220,28 @@
 
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/js/editable-form.js}"></script>
+
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('[data-editable-form]');
+        const measuredAt = document.getElementById('measuredAt');
+
+        if (!form || !measuredAt ||
+            form.dataset.formMode !== 'CREATE' ||
+            measuredAt.value) {
+            return;
+        }
+
+        // Set the current date and time in the browser's local timezone
+        const now = new Date();
+        const localDateTime = new Date(
+            now.getTime() - now.getTimezoneOffset() * 60000
+        );
+
+        measuredAt.value = localDateTime.toISOString().slice(0, 16);
+    });
+</script>
+
 <script th:src="@{/js/measurement-validation.js}"></script>
 
 </body>
