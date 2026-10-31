@@ -28,19 +28,51 @@ Java 21 · Spring Boot 4.1.1 · Spring MVC · Spring Data JPA / Hibernate · Thy
 - `src/test/` — unit, integration, and browser tests.
 
 ### Run locally
-Requires **JDK 21 or newer** compatible with the project and Maven, or the included Maven Wrapper.
+
+Build the application without running tests:
 
 ```bash
-./mvnw clean package
+./mvnw clean package -DskipTests
+```
+
+Start the application:
+
+```bash
 ./mvnw spring-boot:run
 ```
 
-On Windows, use `mvnw.cmd` instead of `./mvnw`. Open `http://localhost:8080`.
+**Testing note:** Some Selenium browser tests require the application to be running and should be executed separately.
 
-By default, H2 stores local data in `./data/pressuredb`. Configuration is in `src/main/resources/application.yaml`. Do not commit local database files.
+By default, H2 stores local data in `./data/pressuredb`.
+Configuration is in `src/main/resources/application.yaml`.
+Do not commit local database files.
 
 ### API
 The application exposes REST endpoints under `/api/persons` and `/api/measurements`. The web interface is served separately through Thymeleaf controllers.
+
+
+### Screenshots
+
+#### Home page
+Main dashboard with navigation to the application's core features.
+
+![Home page](docs/screenshots/bp_journal_main_page.png)
+
+#### Patient search
+Basic and advanced patient search with additional filtering options.
+
+![Patient search](docs/screenshots/bp_journal_patient_search.png)
+
+#### Patient management and measurements
+Editing patient information and recording new blood pressure measurements.
+
+![Patient management and measurements](docs/screenshots/bp_journal_add_edit_patient_or_mesurement.png)
+
+#### Measurement charts and filters
+Visualizing blood pressure and pulse trends with configurable date ranges and time-of-day filters.
+
+![Measurement charts and filters](docs/screenshots/bp_journal_mesurements.png)
+
 
 ### Status and disclaimer
 **Educational prototype — not production-ready.** No per-user authentication or authorization is implemented. Do not expose real patient data through an unprotected deployment.
@@ -75,19 +107,50 @@ Java 21 · Spring Boot 4.1.1 · Spring MVC · Spring Data JPA / Hibernate · Thy
 - `src/test/` — модульні, інтеграційні та браузерні тести.
 
 ### Локальний запуск
-Потрібні **JDK 21 або новіший**, сумісний із проєктом, та Maven або Maven Wrapper із репозиторію.
+
+Збірка застосунку без запуску тестів:
 
 ```bash
-./mvnw clean package
+./mvnw clean package -DskipTests
+```
+
+Запуск застосунку:
+
+```bash
 ./mvnw spring-boot:run
 ```
 
-У Windows використовуйте `mvnw.cmd` замість `./mvnw`. Відкрийте `http://localhost:8080`.
+**Примітка щодо тестування:** Частина браузерних Selenium-тестів потребує запущеного застосунку, тому їх слід виконувати окремо.
 
-За замовчуванням H2 зберігає локальну базу в `./data/pressuredb`. Налаштування — у `src/main/resources/application.yaml`. Не додавайте локальні файли бази до Git.
+За замовчуванням H2 зберігає локальну базу в `./data/pressuredb`.
+Налаштування містяться у `src/main/resources/application.yaml`.
+Не додавайте локальні файли бази даних до Git.
 
 ### API
 REST-ендпоїнти доступні за шляхами `/api/persons` та `/api/measurements`. Вебінтерфейс реалізований окремими Thymeleaf-контролерами.
+
+### Скріншоти
+
+#### Головна сторінка
+Головна сторінка з навігацією до основних функцій застосунку.
+
+![Головна сторінка](docs/screenshots/bp_journal_main_page.png)
+
+#### Пошук пацієнтів
+Звичайний і розширений пошук пацієнтів із додатковими фільтрами.
+
+![Пошук пацієнтів](docs/screenshots/bp_journal_patient_search.png)
+
+#### Керування пацієнтами та вимірюваннями
+Редагування даних пацієнта та додавання нових вимірювань.
+
+![Керування пацієнтами та вимірюваннями](docs/screenshots/bp_journal_add_edit_patient_or_mesurement.png)
+
+#### Графіки вимірювань і фільтри
+Візуалізація артеріального тиску та пульсу з фільтрами за датою і часом доби.
+
+![Графіки вимірювань і фільтри](docs/screenshots/bp_journal_mesurements.png)
+
 
 ### Статус і застереження
 **Навчальний прототип, не готовий до промислового використання.** Індивідуальна автентифікація й авторизація користувачів наразі не реалізовані. Не розміщуйте реальні дані пацієнтів у незахищеному публічному середовищі.
